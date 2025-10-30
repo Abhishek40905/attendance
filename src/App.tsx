@@ -5,6 +5,7 @@ import { LocationCheckPage } from './pages/LocationCheckPage';
 import { LoginPage } from './pages/LoginPage';
 import { TeacherDashboard } from './pages/TeacherDashboard';
 import { StudentDashboard } from './pages/StudentDashboard';
+import LoginButton from './components/loginButton';
 
 const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
 
@@ -32,7 +33,7 @@ function AppContent() {
   }
 
   if (!user) {
-    return <LoginPage />;
+    return <LoginButton />;
   }
 
   if (user.role === 'teacher') {
