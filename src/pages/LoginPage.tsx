@@ -1,50 +1,14 @@
 import { useState } from 'react';
-import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
 import { LogIn } from 'lucide-react';
-import { api } from '../services/api';
-import { useAuth } from '../context/AuthContext';
 import { Spinner } from '../components/Spinner';
-
-interface GoogleUser {
-  email: string;
-  name: string;
-  picture?: string;
-}
+import LoginButton from '../components/loginButton'; // ✅ Import your new button
+import { useAuth } from '../context/AuthContext';
+import { api } from '../services/api';
 
 export const LoginPage = () => {
   const { setUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      if (!credentialResponse.credential) {
-        throw new Error('No credential received');
-      }
-
-      const decoded = jwtDecode<GoogleUser>(credentialResponse.credential);
-
-      const roleResponse = await api.checkUserRole(decoded.email);
-
-      setUser({
-        email: decoded.email,
-        name: decoded.name,
-        picture: decoded.picture,
-        role: roleResponse.role
-      });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleError = () => {
-    setError('Google login failed. Please try again.');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
@@ -54,12 +18,8 @@ export const LoginPage = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
               <LogIn className="w-8 h-8 text-blue-600" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Welcome
-            </h1>
-            <p className="text-gray-600">
-              Sign in to mark your attendance
-            </p>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome</h1>
+            <p className="text-gray-600">Sign in to mark your attendance</p>
           </div>
 
           {error && (
@@ -76,15 +36,8 @@ export const LoginPage = () => {
               </div>
             ) : (
               <div className="flex justify-center">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={handleGoogleError}
-                  useOneTap
-                  theme="filled_blue"
-                  size="large"
-                  text="signin_with"
-                  shape="rectangular"
-                />
+                {/* ✅ Replaced GoogleLogin with our new LoginButton */}
+                <LoginButton />
               </div>
             )}
           </div>
