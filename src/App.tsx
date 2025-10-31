@@ -7,7 +7,7 @@ import { TeacherDashboard } from './pages/TeacherDashboard';
 import { StudentDashboard } from './pages/StudentDashboard';
 import LoginButton from './components/loginButton';
 
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '932567518114-tbeoeo69o06do755s79s6ktudfomo7bv.apps.googleusercontent.com';
 
 function AppContent() {
   const { user, isLoading } = useAuth();
